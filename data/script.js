@@ -1,4 +1,4 @@
-// import ancientsData from "./ancients.js";
+import ancientsData from "./ancients.js";
 
 const cards = document.querySelectorAll('.ancient_card');
 const difficulty = document.querySelectorAll('.difficulty');
@@ -6,6 +6,8 @@ const secondPhase = document.querySelector('.second_phase');
 const thirdPhase = document.querySelector('.third_phase');
 const shuffle = document.querySelector('.shuffle');
 const deck = document.querySelector('.deck');
+const lastCard = document.querySelector('.last_card');
+let selectedCardPath = '';
 
 cards.forEach(element => {
   element.addEventListener('click', ()=>{
@@ -35,11 +37,29 @@ function getDifficulty() {
       secondPhase.style.display = 'block';
       difficultyChoise();
     }
+    console.log(selectedCardPath);
   });
   setTimeout(getDifficulty, 500)
 }
-
-getDifficulty()
+function getSelectedCardPath(){
+  cards.forEach(element => {
+    // console.log(element.style.backgroundImage)
+    if (element.classList.contains('active')){
+      // console.log((element.style.backgroundImage));
+      selectedCardPath = element.style.backgroundImage.replace('url(', '').replace(')', '');
+      return selectedCardPath;
+      
+    }
+  });
+  
+  setTimeout(getSelectedCardPath, 500)
+}
+getSelectedCardPath();
+getDifficulty();
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
 })
+console.log(ancientsData[0].cardFace);
+// lastCard.style.backgroundImage = `url(${ancientsData[0].cardFace})`;
+
+console.log(selectedCardPath);
