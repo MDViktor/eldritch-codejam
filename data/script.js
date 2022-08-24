@@ -24,6 +24,8 @@ cards.forEach(element => {
     console.log(`firststagebc: ${ancientsData[selectedCardIndex].firstStage.blueCards}`);
   })
 });
+let arr = [ancientsData[selectedCardIndex].firstStage.greenCards, ancientsData[selectedCardIndex].secondStage.greenCards, ancientsData[selectedCardIndex].thirdStage.greenCards];
+console.log(arr);
 function difficultyChoise () {
   difficulty.forEach(element => {
     element.addEventListener('click', ()=>{
@@ -58,18 +60,18 @@ function getSelectedCardPath () {
   }
 }
 
-function getFirstStageSet(){
-  let arr = [ancientsData[selectedCardIndex].firstStage.greenCards, ancientsData[selectedCardIndex].secondStage.greenCards, ancientsData[selectedCardIndex].thirdStage.greenCards];
-  document.querySelectorAll('.dot.green').forEach(element => {
-    for(let i=0;i<arr.length;i++){
-      element.textContent = arr[i];
-    }
+// function getFirstStageSet(){
+  
+//   document.querySelectorAll('.dot.green').forEach(element => {
+//     for(let i=0;i<arr.length;i++){
+//       element.textContent = arr[i];
+//     }
     
-  });
+//   });
 
-}
+// }
 
-getFirstStageSet();
+// getFirstStageSet();
 getDifficulty();
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
