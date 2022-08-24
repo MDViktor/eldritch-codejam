@@ -5,6 +5,7 @@ const difficulty = document.querySelectorAll('.difficulty');
 const secondPhase = document.querySelector('.second_phase');
 const thirdPhase = document.querySelector('.third_phase');
 const shuffle = document.querySelector('.shuffle');
+const deck = document.querySelector('.deck');
 
 cards.forEach(element => {
   element.addEventListener('click', ()=>{
