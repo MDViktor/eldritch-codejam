@@ -1,4 +1,6 @@
 import ancientsData from "./ancients.js";
+import { brownCards, blueCards, greenCards } from "./mythicCards/index.js";
+
 
 const cards = document.querySelectorAll('.ancient_card');
 const difficulty = document.querySelectorAll('.difficulty');
@@ -80,7 +82,10 @@ function getVisualStageSet(){
 }
 
 function getFirstStageDeck(){
-  console.log()//закончил работу здесь
+  greenCards.forEach(element => {
+    console.log(element);
+  });
+  //закончил работу здесь
 }
 
 
