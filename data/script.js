@@ -7,8 +7,13 @@ const thirdPhase = document.querySelector('.third_phase');
 const shuffle = document.querySelector('.shuffle');
 const deck = document.querySelector('.deck');
 const lastCard = document.querySelector('.last_card');
+const greenDots = document.querySelectorAll('.dot.green');
+const brownDots = document.querySelectorAll('.dot.brown');
+const blueDots = document.querySelectorAll('.dot.blue');
 var selectedCardIndex;
-
+var qGreenCards;
+var qBrownCards;
+var qBlueCards;
 cards.forEach(element => {
   element.addEventListener('click', ()=>{
     if (!element.classList.contains('active')){
@@ -22,10 +27,15 @@ cards.forEach(element => {
       }
     }
     console.log(`firststagebc: ${ancientsData[selectedCardIndex].firstStage.blueCards}`);
+    qGreenCards = [ancientsData[selectedCardIndex].firstStage.greenCards, ancientsData[selectedCardIndex].secondStage.greenCards, ancientsData[selectedCardIndex].thirdStage.greenCards];
+    qBrownCards = [ancientsData[selectedCardIndex].firstStage.brownCards, ancientsData[selectedCardIndex].secondStage.brownCards, ancientsData[selectedCardIndex].thirdStage.brownCards];
+    qBlueCards = [ancientsData[selectedCardIndex].firstStage.blueCards, ancientsData[selectedCardIndex].secondStage.blueCards, ancientsData[selectedCardIndex].thirdStage.blueCards];
+    console.log(qGreenCards);
+    getVisualStageSet();
+    
   })
 });
-let arr = [ancientsData[selectedCardIndex].firstStage.greenCards, ancientsData[selectedCardIndex].secondStage.greenCards, ancientsData[selectedCardIndex].thirdStage.greenCards];
-console.log(arr);
+
 function difficultyChoise () {
   difficulty.forEach(element => {
     element.addEventListener('click', ()=>{
@@ -47,6 +57,7 @@ function getDifficulty() {
     }
 
   });
+  
   setTimeout(getDifficulty, 500)
 }
 
@@ -60,18 +71,15 @@ function getSelectedCardPath () {
   }
 }
 
-// function getFirstStageSet(){
-  
-//   document.querySelectorAll('.dot.green').forEach(element => {
-//     for(let i=0;i<arr.length;i++){
-//       element.textContent = arr[i];
-//     }
-    
-//   });
+function getVisualStageSet(){
+  for(let i=0;i<3;i++){
+      greenDots[i].textContent = qGreenCards[i];
+      brownDots[i].textContent = qBrownCards[i];
+      blueDots[i].textContent = qBlueCards[i];
+  }
+}
 
-// }
 
-// getFirstStageSet();
 getDifficulty();
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
