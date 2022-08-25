@@ -32,7 +32,7 @@ cards.forEach(element => {
     qBlueCards = [ancientsData[selectedCardIndex].firstStage.blueCards, ancientsData[selectedCardIndex].secondStage.blueCards, ancientsData[selectedCardIndex].thirdStage.blueCards];
     console.log(qGreenCards);
     getVisualStageSet();
-    
+    getFirstStageDeck();
   })
 });
 
@@ -77,6 +77,10 @@ function getVisualStageSet(){
       brownDots[i].textContent = qBrownCards[i];
       blueDots[i].textContent = qBlueCards[i];
   }
+}
+
+function getFirstStageDeck(){
+  console.log()//закончил работу здесь
 }
 
 
