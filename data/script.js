@@ -82,12 +82,21 @@ function getVisualStageSet(){
 }
 
 function getFirstStageDeck(){
+  console.log(greenCards[getRandomNum(0,greenCards.length)].id);//подбор
   greenCards.forEach(element => {
-    console.log(element);
+    // console.log(element.id);
+    // console.log(getRandomNum(0,greenCards.length));
+    // console.log(greenCards.length);
   });
   //закончил работу здесь
 }
 
+function getRandomNum(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+  // let bgNum = String(RandomNum).padStart(2, 0);// для того что бы был ноль и 2 знака
+}
 
 getDifficulty();
 shuffle.addEventListener('click', ()=>{
