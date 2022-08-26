@@ -32,9 +32,12 @@ cards.forEach(element => {
     qGreenCards = [ancientsData[selectedCardIndex].firstStage.greenCards, ancientsData[selectedCardIndex].secondStage.greenCards, ancientsData[selectedCardIndex].thirdStage.greenCards];
     qBrownCards = [ancientsData[selectedCardIndex].firstStage.brownCards, ancientsData[selectedCardIndex].secondStage.brownCards, ancientsData[selectedCardIndex].thirdStage.brownCards];
     qBlueCards = [ancientsData[selectedCardIndex].firstStage.blueCards, ancientsData[selectedCardIndex].secondStage.blueCards, ancientsData[selectedCardIndex].thirdStage.blueCards];
-    console.log(qGreenCards);
+    const totalGreenCards = qGreenCards.reduce((acc, num) => acc + num, 0);
+    console.log(qGreenCards, totalGreenCards);
+
     getVisualStageSet();
-    getFirstStageDeck();
+    // getStageDeck();
+    getSome(greenCards, qGreenCards);
   })
 });
 
@@ -51,6 +54,26 @@ function difficultyChoise () {
   });
   
 }
+
+// function difficultyFilter(){
+
+// }
+
+function shuffeling(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+
+    // поменять элементы местами
+    // мы используем для этого синтаксис "деструктурирующее присваивание"
+    // подробнее о нём - в следующих главах
+    // то же самое можно записать как:
+    // let t = array[i]; array[i] = array[j]; array[j] = t
+    [array[i], array[j]] = [array[j], array[i]];
+
+  }
+  return array;
+}
+
 function getDifficulty() {
   cards.forEach(element => {
     if (element.classList.contains('active')){
@@ -81,15 +104,46 @@ function getVisualStageSet(){
   }
 }
 
-function getFirstStageDeck(){
-  console.log(greenCards[getRandomNum(0,greenCards.length)].id);//подбор
-  greenCards.forEach(element => {
-    // console.log(element.id);
-    // console.log(getRandomNum(0,greenCards.length));
-    // console.log(greenCards.length);
+function getStageDeck(){
+  let RandomNum = getRandomNum(0,greenCards.length-1);
+  console.log(RandomNum);
+  console.log(greenCards[RandomNum].id);
+  let stack = [];
+  greenCards.forEach(element => { // создание массива по условию сложности
+    // if(element.difficulty==='easy'){
+    //   stack.push(element.id);
+    // }
+    stack.push(element.id); // набили стак всеми зелеными
   });
-  //закончил работу здесь
+  let shuffeled = shuffeling(stack) // перемешали стак
+  console.log(shuffeled, qGreenCards[0]);
+  let stage1, stage2, stage3 = [];
+  stage1 = shuffeled.splice(0,qGreenCards[0]); // отобрали карты из стака в первый уровень по условию мифа
+  shuffeled = shuffeling(shuffeled); // перемешивание после отбора
+  console.log(shuffeled);
+  stage2 = shuffeled.splice(0, qGreenCards[1]); //отобрали карты из стака во второй уровень по условию мифа
+  shuffeled = shuffeling(shuffeled); // перемешивание после отбора
+  console.log(shuffeled);
+  stage3 = shuffeled.splice(0, qGreenCards[2]); //отобрали карты из стака в третий уровень по условию мифа
+  console.log(shuffeled);
+  console.log(`shuffeled greens:${stage1}, ${stage2}, ${stage3}`);
 }
+
+function getSome(arr, def){
+  let stack = [];
+  arr.forEach(element => {
+    stack.push(element.id);
+  });
+  let shuffeled = shuffeling(stack);
+  let stage1, stage2, stage3 = [];
+  stage1 = shuffeled.splice(0,def[0]);
+  shuffeled = shuffeling(shuffeled);
+  stage2 = shuffeled.splice(0,def[1]);
+  shuffeled = shuffeling(shuffeled);
+  stage3 = shuffeled.splice(0,def[2]);
+  console.log(`shuffeled color:${stage1}, ${stage2}, ${stage3}`);
+}
+
 
 function getRandomNum(min, max) {
   min = Math.ceil(min);
@@ -104,3 +158,6 @@ shuffle.addEventListener('click', ()=>{
 })
 // console.log(ancientsData[selectedCardIndex].cardFace);
 // lastCard.style.backgroundImage = `url(${ancientsData[0].cardFace})`;
+
+
+
