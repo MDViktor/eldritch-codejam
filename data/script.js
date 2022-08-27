@@ -39,7 +39,6 @@ cards.forEach(element => {
     getDeckStack()
     console.log(sDeck);
     console.log(deckStack);
-    // getCard();
   })
 });
 
@@ -104,15 +103,8 @@ function difficultyChoise () {
 
 function shuffeling(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
-
-    // поменять элементы местами
-    // мы используем для этого синтаксис "деструктурирующее присваивание"
-    // подробнее о нём - в следующих главах
-    // то же самое можно записать как:
-    // let t = array[i]; array[i] = array[j]; array[j] = t
+    let j = Math.floor(Math.random() * (i + 1)); 
     [array[i], array[j]] = [array[j], array[i]];
-
   }
   return array;
 }
@@ -182,7 +174,6 @@ function getVisualStageSet(){
   }
 }
 
-
 function getSome(arr, def){
   let stack = [];
   arr.forEach(element => {
@@ -200,19 +191,10 @@ function getSome(arr, def){
 
 }
 
-
-// function getRandomNum(min, max) {
-//   min = Math.ceil(min);
-//   max = Math.floor(max);
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-
 getDifficulty();
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
 })
-// console.log(ancientsData[selectedCardIndex].cardFace);
-// lastCard.style.backgroundImage = `url(${ancientsData[0].cardFace})`;
 
 deck.addEventListener('click', getCard);
 
