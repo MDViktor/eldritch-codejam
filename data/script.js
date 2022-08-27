@@ -130,8 +130,38 @@ function getDifficulty() {
 }
 
 function getCard() {
-  // console.log(deckStack);
+  let result = '';
   lastCardId = deckStack.pop();
+  for (let keys in greenCards) {
+    for (let val in greenCards[keys]){
+      // console.log(greenCards[keys][val]);
+      if (greenCards[keys][val] === lastCardId) {
+        console.log(greenCards[keys].cardFace);
+        result = greenCards[keys].cardFace
+      }
+    }
+  }
+  for (let keys in blueCards) {
+    for (let val in blueCards[keys]){
+      // console.log(greenCards[keys][val]);
+      if (blueCards[keys][val] === lastCardId) {
+        console.log(blueCards[keys].cardFace);
+        result = blueCards[keys].cardFace
+      }
+    }
+  }
+  for (let keys in brownCards) {
+    for (let val in brownCards[keys]){
+      // console.log(greenCards[keys][val]);
+      if (brownCards[keys][val] === lastCardId) {
+        console.log(brownCards[keys].cardFace);
+        result = brownCards[keys].cardFace
+      }
+    }
+  }
+
+  let lastCardFacePath = `url(${result})`
+  lastCard.style.backgroundImage = lastCardFacePath;
   console.log(deckStack, lastCardId);
 }
 
