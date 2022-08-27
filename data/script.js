@@ -18,6 +18,7 @@ var deckStack;
 var qGreenCards;
 var qBrownCards;
 var qBlueCards;
+var lastCardId;
 cards.forEach(element => {
   element.addEventListener('click', ()=>{
     if (!element.classList.contains('active')){
@@ -38,6 +39,7 @@ cards.forEach(element => {
     getDeckStack()
     console.log(sDeck);
     console.log(deckStack);
+    // getCard();
   })
 });
 
@@ -127,6 +129,11 @@ function getDifficulty() {
   setTimeout(getDifficulty, 500)
 }
 
+function getCard() {
+  // console.log(deckStack);
+  lastCardId = deckStack.pop();
+  console.log(deckStack, lastCardId);
+}
 
 function getSelectedCardPath () {
   for (let card of cards){
@@ -177,5 +184,5 @@ shuffle.addEventListener('click', ()=>{
 // console.log(ancientsData[selectedCardIndex].cardFace);
 // lastCard.style.backgroundImage = `url(${ancientsData[0].cardFace})`;
 
-
+deck.addEventListener('click', getCard);
 
