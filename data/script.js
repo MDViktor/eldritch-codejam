@@ -33,13 +33,49 @@ cards.forEach(element => {
     qBrownCards = [ancientsData[selectedCardIndex].firstStage.brownCards, ancientsData[selectedCardIndex].secondStage.brownCards, ancientsData[selectedCardIndex].thirdStage.brownCards];
     qBlueCards = [ancientsData[selectedCardIndex].firstStage.blueCards, ancientsData[selectedCardIndex].secondStage.blueCards, ancientsData[selectedCardIndex].thirdStage.blueCards];
     const totalGreenCards = qGreenCards.reduce((acc, num) => acc + num, 0);
-    console.log(qGreenCards, totalGreenCards);
+    const totalBlueCards = qBlueCards.reduce((acc, num) => acc + num, 0);
+    const totalBrownCards = qBrownCards.reduce((acc, num) => acc + num, 0);
+
+    console.log('greens:' + qGreenCards, totalGreenCards);
+    console.log('blues:' + qBlueCards, totalBlueCards);
+    console.log('browns:' + qBrownCards, totalBrownCards);
 
     getVisualStageSet();
-    // getStageDeck();
-    getSome(greenCards, qGreenCards);
+
+    const deck = merge_decks(getSome(greenCards, qGreenCards), getSome(blueCards, qBlueCards), getSome(brownCards, qBrownCards));
+    deck.stage1 = shuffeling(deck.stage1);
+    deck.stage2 = shuffeling(deck.stage2);
+    deck.stage3 = shuffeling(deck.stage3);
+    console.log(    
+      deck
+    );
+
   })
 });
+
+function merge_decks(obj1,obj2,obj3) {
+  var objE = {
+    stage1: [],
+    stage2: [],
+    stage3: [],
+  };
+  for (var key in obj1) {
+    for(let el of obj1[key]){
+      objE[key].push(el);
+    }
+  } 
+  for (var key in obj2) { 
+    for(let el of obj2[key]){
+      objE[key].push(el);
+    } 
+  }
+  for (var key in obj3) {
+    for(let el of obj3[key]){
+      objE[key].push(el);
+    }
+  }
+  return objE;
+};
 
 function difficultyChoise () {
   difficulty.forEach(element => {
@@ -142,6 +178,10 @@ function getSome(arr, def){
   shuffeled = shuffeling(shuffeled);
   stage3 = shuffeled.splice(0,def[2]);
   console.log(`shuffeled color:${stage1}, ${stage2}, ${stage3}`);
+  return {stage1, stage2, stage3};
+  // let z = [];
+  // z = z.concat(stage1,stage2,stage3);
+  // console.log(z);
 }
 
 
