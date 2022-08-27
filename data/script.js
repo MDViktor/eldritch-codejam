@@ -13,6 +13,8 @@ const greenDots = document.querySelectorAll('.dot.green');
 const brownDots = document.querySelectorAll('.dot.brown');
 const blueDots = document.querySelectorAll('.dot.blue');
 var selectedCardIndex;
+var sDeck;
+var deckStack;
 var qGreenCards;
 var qBrownCards;
 var qBlueCards;
@@ -25,33 +27,36 @@ cards.forEach(element => {
     for(let i=0;i<ancientsData.length;i++){
       if(getSelectedCardPath()===ancientsData[i].cardFace){
         selectedCardIndex = i;
-        console.log(`selectedCardIndex:${selectedCardIndex}`);
       }
     }
-    console.log(`firststagebc: ${ancientsData[selectedCardIndex].firstStage.blueCards}`);
     qGreenCards = [ancientsData[selectedCardIndex].firstStage.greenCards, ancientsData[selectedCardIndex].secondStage.greenCards, ancientsData[selectedCardIndex].thirdStage.greenCards];
     qBrownCards = [ancientsData[selectedCardIndex].firstStage.brownCards, ancientsData[selectedCardIndex].secondStage.brownCards, ancientsData[selectedCardIndex].thirdStage.brownCards];
     qBlueCards = [ancientsData[selectedCardIndex].firstStage.blueCards, ancientsData[selectedCardIndex].secondStage.blueCards, ancientsData[selectedCardIndex].thirdStage.blueCards];
-    const totalGreenCards = qGreenCards.reduce((acc, num) => acc + num, 0);
-    const totalBlueCards = qBlueCards.reduce((acc, num) => acc + num, 0);
-    const totalBrownCards = qBrownCards.reduce((acc, num) => acc + num, 0);
-
-    console.log('greens:' + qGreenCards, totalGreenCards);
-    console.log('blues:' + qBlueCards, totalBlueCards);
-    console.log('browns:' + qBrownCards, totalBrownCards);
 
     getVisualStageSet();
-
-    const deck = merge_decks(getSome(greenCards, qGreenCards), getSome(blueCards, qBlueCards), getSome(brownCards, qBrownCards));
-    deck.stage1 = shuffeling(deck.stage1);
-    deck.stage2 = shuffeling(deck.stage2);
-    deck.stage3 = shuffeling(deck.stage3);
-    console.log(    
-      deck
-    );
-
+    getShuffeledDeck();
+    getDeckStack()
+    console.log(sDeck);
+    console.log(deckStack);
   })
 });
+
+function getDeckStack () {
+  deckStack = [];
+  for (let stage in sDeck){
+    deckStack.push(sDeck[stage]);
+  }
+  deckStack = deckStack.flat().reverse();
+  return deckStack;
+}
+
+function getShuffeledDeck() {
+  sDeck = merge_decks(getSome(greenCards, qGreenCards), getSome(blueCards, qBlueCards), getSome(brownCards, qBrownCards));
+    sDeck.stage1 = shuffeling(sDeck.stage1);
+    sDeck.stage2 = shuffeling(sDeck.stage2);
+    sDeck.stage3 = shuffeling(sDeck.stage3);
+    return sDeck
+}
 
 function merge_decks(obj1,obj2,obj3) {
   var objE = {
@@ -140,30 +145,6 @@ function getVisualStageSet(){
   }
 }
 
-function getStageDeck(){
-  let RandomNum = getRandomNum(0,greenCards.length-1);
-  console.log(RandomNum);
-  console.log(greenCards[RandomNum].id);
-  let stack = [];
-  greenCards.forEach(element => { // создание массива по условию сложности
-    // if(element.difficulty==='easy'){
-    //   stack.push(element.id);
-    // }
-    stack.push(element.id); // набили стак всеми зелеными
-  });
-  let shuffeled = shuffeling(stack) // перемешали стак
-  console.log(shuffeled, qGreenCards[0]);
-  let stage1, stage2, stage3 = [];
-  stage1 = shuffeled.splice(0,qGreenCards[0]); // отобрали карты из стака в первый уровень по условию мифа
-  shuffeled = shuffeling(shuffeled); // перемешивание после отбора
-  console.log(shuffeled);
-  stage2 = shuffeled.splice(0, qGreenCards[1]); //отобрали карты из стака во второй уровень по условию мифа
-  shuffeled = shuffeling(shuffeled); // перемешивание после отбора
-  console.log(shuffeled);
-  stage3 = shuffeled.splice(0, qGreenCards[2]); //отобрали карты из стака в третий уровень по условию мифа
-  console.log(shuffeled);
-  console.log(`shuffeled greens:${stage1}, ${stage2}, ${stage3}`);
-}
 
 function getSome(arr, def){
   let stack = [];
@@ -177,20 +158,17 @@ function getSome(arr, def){
   stage2 = shuffeled.splice(0,def[1]);
   shuffeled = shuffeling(shuffeled);
   stage3 = shuffeled.splice(0,def[2]);
-  console.log(`shuffeled color:${stage1}, ${stage2}, ${stage3}`);
+
   return {stage1, stage2, stage3};
-  // let z = [];
-  // z = z.concat(stage1,stage2,stage3);
-  // console.log(z);
+
 }
 
 
-function getRandomNum(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-  // let bgNum = String(RandomNum).padStart(2, 0);// для того что бы был ноль и 2 знака
-}
+// function getRandomNum(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
 
 getDifficulty();
 shuffle.addEventListener('click', ()=>{
