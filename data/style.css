@@ -100,10 +100,11 @@ body {
   border-radius: 34%;
 }
 .deck_container {
-  display: flex;
+  display: none;
   padding: 20px 12%;
   gap: 20px;
   justify-content: space-around;
+  transition: 0.6s;
 }
 .deck {
   background-image: url(../assets/mythicCardBackground.png);

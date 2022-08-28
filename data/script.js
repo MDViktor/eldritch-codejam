@@ -8,6 +8,7 @@ const secondPhase = document.querySelector('.second_phase');
 const thirdPhase = document.querySelector('.third_phase');
 const shuffle = document.querySelector('.shuffle');
 const deck = document.querySelector('.deck');
+const deckContainer = document.querySelector('.deck_container');
 const lastCard = document.querySelector('.last_card');
 const greenDots = document.querySelectorAll('.dot.green');
 const brownDots = document.querySelectorAll('.dot.brown');
@@ -19,6 +20,9 @@ var qGreenCards;
 var qBrownCards;
 var qBlueCards;
 var lastCardId;
+var greenDotsNumber;
+var blueDotsNumber;
+var brownDotsNumber;
 cards.forEach(element => {
   element.addEventListener('click', ()=>{
     if (!element.classList.contains('active')){
@@ -34,6 +38,7 @@ cards.forEach(element => {
     qBrownCards = [ancientsData[selectedCardIndex].firstStage.brownCards, ancientsData[selectedCardIndex].secondStage.brownCards, ancientsData[selectedCardIndex].thirdStage.brownCards];
     qBlueCards = [ancientsData[selectedCardIndex].firstStage.blueCards, ancientsData[selectedCardIndex].secondStage.blueCards, ancientsData[selectedCardIndex].thirdStage.blueCards];
 
+
     getVisualStageSet();
     getShuffeledDeck();
     getDeckStack()
@@ -42,6 +47,7 @@ cards.forEach(element => {
   })
 });
 
+// добавляет карты из объекта колода в стэк колода
 function getDeckStack () {
   deckStack = [];
   for (let stage in sDeck){
@@ -50,15 +56,18 @@ function getDeckStack () {
   deckStack = deckStack.flat().reverse();
   return deckStack;
 }
-
+// перемешивает каждый уровень объекта колоды
 function getShuffeledDeck() {
-  sDeck = merge_decks(getSome(greenCards, qGreenCards), getSome(blueCards, qBlueCards), getSome(brownCards, qBrownCards));
+  greenDotsNumber = getSome(greenCards, qGreenCards);
+  blueDotsNumber = getSome(blueCards, qBlueCards);
+  brownDotsNumber = getSome(brownCards, qBrownCards);
+  sDeck = merge_decks(greenDotsNumber, blueDotsNumber, brownDotsNumber);
     sDeck.stage1 = shuffeling(sDeck.stage1);
     sDeck.stage2 = shuffeling(sDeck.stage2);
     sDeck.stage3 = shuffeling(sDeck.stage3);
     return sDeck
 }
-
+// функция перемешивания
 function merge_decks(obj1,obj2,obj3) {
   var objE = {
     stage1: [],
@@ -82,7 +91,7 @@ function merge_decks(obj1,obj2,obj3) {
   }
   return objE;
 };
-
+// визуализация выборов карт и сложностей
 function difficultyChoise () {
   difficulty.forEach(element => {
     element.addEventListener('click', ()=>{
@@ -100,7 +109,7 @@ function difficultyChoise () {
 // function difficultyFilter(){
 
 // }
-
+/// функция перемешивания списка
 function shuffeling(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); 
@@ -108,7 +117,41 @@ function shuffeling(array) {
   }
   return array;
 }
+// отнимает от миниколоды по цвету значение вынутой карты
+function getDiffLastCard(dots){
+  let temp = dots;
+  for (let val in temp){
+    for (let j in temp[val]){
+      if(temp[val][j] === lastCardId){
+        temp[val].splice(temp[val].indexOf(lastCardId),1);
+      }
+    }
+  }
+  return temp
+}
+// трекер 
+function tracker (){
+  let green = getDiffLastCard(greenDotsNumber);
+  let blue = getDiffLastCard(blueDotsNumber);
+  let brown = getDiffLastCard(brownDotsNumber);
+  let i = 0;
+  let j = 0;
+  let k = 0;
+  for (let val in green){
+    greenDots[i].textContent = green[val].length;
+    i++;
+  }
+  for (let val in blue){
+    blueDots[j].textContent = blue[val].length;
+    j++;
+  }
+  for (let val in brown){
+    brownDots[k].textContent = brown[val].length;
+    k++;
+  }
+}
 
+// визуализация кнопки замешивания
 function getDifficulty() {
   cards.forEach(element => {
     if (element.classList.contains('active')){
@@ -117,10 +160,10 @@ function getDifficulty() {
     }
 
   });
-  
   setTimeout(getDifficulty, 500)
 }
 
+// взятие карты из колоды
 function getCard() {
   let result = '';
   lastCardId = deckStack.pop();
@@ -154,9 +197,11 @@ function getCard() {
 
   let lastCardFacePath = `url(${result})`
   lastCard.style.backgroundImage = lastCardFacePath;
-  console.log(deckStack, lastCardId);
+  console.log(deckStack, lastCardId, deckStack.length);
+  tracker();
 }
 
+// получение пути выбранного мифа
 function getSelectedCardPath () {
   for (let card of cards){
     if (card.classList.contains('active')){
@@ -173,7 +218,7 @@ function getVisualStageSet(){
       blueDots[i].textContent = qBlueCards[i];
   }
 }
-
+// возвращает миниколоду по цвету по условию мифа в виде объекта разбитого на 3 уровня принимая весь набор карт и условие 
 function getSome(arr, def){
   let stack = [];
   arr.forEach(element => {
@@ -186,7 +231,6 @@ function getSome(arr, def){
   stage2 = shuffeled.splice(0,def[1]);
   shuffeled = shuffeling(shuffeled);
   stage3 = shuffeled.splice(0,def[2]);
-
   return {stage1, stage2, stage3};
 
 }
@@ -194,6 +238,7 @@ function getSome(arr, def){
 getDifficulty();
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
+  deckContainer.style.display = 'flex';
 })
 
 deck.addEventListener('click', getCard);
