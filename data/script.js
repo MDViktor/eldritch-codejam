@@ -1,7 +1,7 @@
 import ancientsData from "./ancients.js";
 import { brownCards, blueCards, greenCards } from "./mythicCards/index.js";
 
-
+var copyGreenCards;
 const cards = document.querySelectorAll('.ancient_card');
 const difficulty = document.querySelectorAll('.difficulty');
 const secondPhase = document.querySelector('.second_phase');
@@ -13,6 +13,7 @@ const lastCard = document.querySelector('.last_card');
 const greenDots = document.querySelectorAll('.dot.green');
 const brownDots = document.querySelectorAll('.dot.brown');
 const blueDots = document.querySelectorAll('.dot.blue');
+var selectedDifficulty;
 var selectedCardIndex;
 var sDeck;
 var deckStack;
@@ -94,21 +95,41 @@ function merge_decks(obj1,obj2,obj3) {
 // визуализация выборов карт и сложностей
 function difficultyChoise () {
   difficulty.forEach(element => {
-    element.addEventListener('click', ()=>{
+    element.addEventListener('click', (event)=>{
       if (!element.classList.contains('active')){
         difficulty.forEach( n=>n.classList.remove('active'));
         element.classList.add('active');
         thirdPhase.style.display = 'block';
       } 
-      
     })
   });
   
 }
-
-// function difficultyFilter(){
-
-// }
+function Diff(arr){
+  let copy = arr; //// ЗАКОНЧИЛ ЗДЕСЬ!!!
+  if (selectedDifficulty === 'Normal'){
+    return copy;
+  }
+  if (selectedDifficulty === 'Hard'){
+    for (let i=0; i<copy.length; i++){
+        if (copy[i].difficulty === 'easy'){
+          copy.splice(i,1);
+        }
+    }
+    console.log(copy);
+    console.log(arr);
+    console.log(greenCards);
+  }
+  // if (selectedDifficulty === 'Normal'){
+  //   console.log('+');
+  // }
+  // if (selectedDifficulty === 'Normal'){
+  //   console.log('+');
+  // }
+  // if (selectedDifficulty === 'Normal'){
+  //   console.log('+');
+  // }
+}
 /// функция перемешивания списка
 function shuffeling(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -152,7 +173,7 @@ function tracker (){
 }
 
 // визуализация кнопки замешивания
-function getDifficulty() {
+function getDifficultySelect() {
   cards.forEach(element => {
     if (element.classList.contains('active')){
       secondPhase.style.display = 'block';
@@ -160,7 +181,16 @@ function getDifficulty() {
     }
 
   });
-  setTimeout(getDifficulty, 500)
+  difficulty.forEach(element => {
+    if (element.classList.contains('active')){
+      selectedDifficulty = element.textContent;
+    }
+  });
+  if(selectedDifficulty){
+    console.log(selectedDifficulty);
+    Diff(greenCards);
+  }
+  setTimeout(getDifficultySelect, 500)
 }
 
 // взятие карты из колоды
@@ -235,7 +265,7 @@ function getSome(arr, def){
 
 }
 
-getDifficulty();
+getDifficultySelect();
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
   deckContainer.style.display = 'flex';
