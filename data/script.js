@@ -426,15 +426,6 @@ function getSome(arr, def){
 
 }
 
-// difficulty.forEach(element => {
-//   element.addEventListener('click', ()=>{
-//       difficultyChoise();
-//       getDiff();
-//       getShuffeledDeck();
-//       getDeckStack();
-//     } 
-//   )
-//   });
 getDifficultySelect();
 
 
