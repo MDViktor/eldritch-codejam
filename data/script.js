@@ -1,7 +1,7 @@
 import ancientsData from "./ancients.js";
 import { brownCards, blueCards, greenCards } from "./mythicCards/index.js";
 
-var copyGreenCards = greenCards;
+
 const cards = document.querySelectorAll('.ancient_card');
 const difficulty = document.querySelectorAll('.difficulty');
 const secondPhase = document.querySelector('.second_phase');
@@ -41,6 +41,7 @@ cards.forEach(element => {
 
 
     getVisualStageSet();
+    // getDiff();
     getShuffeledDeck();
     getDeckStack()
     console.log(sDeck);
@@ -55,11 +56,15 @@ function getDeckStack () {
     deckStack.push(sDeck[stage]);
   }
   deckStack = deckStack.flat().reverse();
+  console.log(deckStack);
   return deckStack;
 }
 // перемешивает каждый уровень объекта колоды
 function getShuffeledDeck() {
-  greenDotsNumber = getSome(copyGreenCards, qGreenCards);
+  // console.log(getDiff());
+  // // copyGreenCards = getDiff();
+  // console.log(copyGreenCards);
+  greenDotsNumber = getSome(greenCards, qGreenCards);
   blueDotsNumber = getSome(blueCards, qBlueCards);
   brownDotsNumber = getSome(brownCards, qBrownCards);
   sDeck = merge_decks(greenDotsNumber, blueDotsNumber, brownDotsNumber);
@@ -100,34 +105,38 @@ function difficultyChoise () {
         difficulty.forEach( n=>n.classList.remove('active'));
         element.classList.add('active');
         thirdPhase.style.display = 'block';
+        // getDiff();
+        // getShuffeledDeck();
+        // getDeckStack();
       } 
     })
   });
   
 }
-function getDiff(){
+// function getDiff(){
   
-  // if (selectedDifficulty === 'Normal'){
-  //   return copy;
-  // }
-  if (selectedDifficulty === 'Hard'){
-    for (let i=0; i<copyGreenCards.length; i++){
-        if (copyGreenCards[i].difficulty === 'easy'){
-          copyGreenCards.splice(i,1);
-        }
-    }
-    return;
-  }
-  // if (selectedDifficulty === 'Normal'){
-  //   console.log('+');
-  // }
-  // if (selectedDifficulty === 'Normal'){
-  //   console.log('+');
-  // }
-  // if (selectedDifficulty === 'Normal'){
-  //   console.log('+');
-  // }
-}
+//   if (selectedDifficulty === ''){
+//     return copyGreenCards;
+//   }
+//   if (selectedDifficulty === 'Hard'){
+//     for (let i=0; i<copyGreenCards.length; i++){
+//         if (copyGreenCards[i].difficulty === 'easy'){
+//           copyGreenCards.splice(i,1);
+//         }
+//       }
+      
+//     return copyGreenCards;
+//   }
+//   // if (selectedDifficulty === 'Normal'){
+//   //   console.log('+');
+//   // }
+//   // if (selectedDifficulty === 'Normal'){
+//   //   console.log('+');
+//   // }
+//   // if (selectedDifficulty === 'Normal'){
+//   //   console.log('+');
+//   // }
+// }
 /// функция перемешивания списка
 function shuffeling(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -182,11 +191,13 @@ function getDifficultySelect() {
   difficulty.forEach(element => {
     if (element.classList.contains('active')){
       selectedDifficulty = element.textContent;
+      
     }
   });
   if(selectedDifficulty){
     console.log(selectedDifficulty);
-    getDiff();
+
+
   }
   setTimeout(getDifficultySelect, 500)
 }
@@ -260,12 +271,23 @@ function getSome(arr, def){
 
 }
 
+// difficulty.forEach(element => {
+//   element.addEventListener('click', ()=>{
+//       difficultyChoise();
+//       getDiff();
+//       getShuffeledDeck();
+//       getDeckStack();
+//     } 
+//   )
+//   });
 getDifficultySelect();
+
 
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
   deckContainer.style.display = 'flex';
 })
+
 
 deck.addEventListener('click', getCard);
 
