@@ -1,7 +1,9 @@
 import ancientsData from "./ancients.js";
 import { brownCards, blueCards, greenCards } from "./mythicCards/index.js";
 
-
+var copyGreenCards ;
+var copyBlueCards ;
+var copyBrownCards ;
 const cards = document.querySelectorAll('.ancient_card');
 const difficulty = document.querySelectorAll('.difficulty');
 const secondPhase = document.querySelector('.second_phase');
@@ -24,6 +26,7 @@ var lastCardId;
 var greenDotsNumber;
 var blueDotsNumber;
 var brownDotsNumber;
+
 cards.forEach(element => {
   element.addEventListener('click', ()=>{
     if (!element.classList.contains('active')){
@@ -41,11 +44,8 @@ cards.forEach(element => {
 
 
     getVisualStageSet();
-    // getDiff();
-    getShuffeledDeck();
-    getDeckStack()
-    console.log(sDeck);
-    console.log(deckStack);
+
+
   })
 });
 
@@ -64,9 +64,9 @@ function getShuffeledDeck() {
   // console.log(getDiff());
   // // copyGreenCards = getDiff();
   // console.log(copyGreenCards);
-  greenDotsNumber = getSome(greenCards, qGreenCards);
-  blueDotsNumber = getSome(blueCards, qBlueCards);
-  brownDotsNumber = getSome(brownCards, qBrownCards);
+  greenDotsNumber = getSome(copyGreenCards, qGreenCards);
+  blueDotsNumber = getSome(copyBlueCards, qBlueCards);
+  brownDotsNumber = getSome(copyBrownCards, qBrownCards);
   sDeck = merge_decks(greenDotsNumber, blueDotsNumber, brownDotsNumber);
     sDeck.stage1 = shuffeling(sDeck.stage1);
     sDeck.stage2 = shuffeling(sDeck.stage2);
@@ -105,38 +105,55 @@ function difficultyChoise () {
         difficulty.forEach( n=>n.classList.remove('active'));
         element.classList.add('active');
         thirdPhase.style.display = 'block';
-        // getDiff();
-        // getShuffeledDeck();
-        // getDeckStack();
+        getDifficultySelect();
+        getDiff1();
       } 
     })
   });
   
 }
-// function getDiff(){
-  
-//   if (selectedDifficulty === ''){
-//     return copyGreenCards;
-//   }
-//   if (selectedDifficulty === 'Hard'){
-//     for (let i=0; i<copyGreenCards.length; i++){
-//         if (copyGreenCards[i].difficulty === 'easy'){
-//           copyGreenCards.splice(i,1);
-//         }
-//       }
-      
-//     return copyGreenCards;
-//   }
-//   // if (selectedDifficulty === 'Normal'){
-//   //   console.log('+');
-//   // }
-//   // if (selectedDifficulty === 'Normal'){
-//   //   console.log('+');
-//   // }
-//   // if (selectedDifficulty === 'Normal'){
-//   //   console.log('+');
-//   // }
-// }
+function getDiff1(){
+  // console.log(selectedDifficulty + 'test!');
+  if (selectedDifficulty === 'Normal'){
+    getShuffeledDeck();
+    getDeckStack();
+  }
+  if (selectedDifficulty === 'Hard'){
+    copyGreenCards = greenCards;
+    copyBlueCards = blueCards;
+    copyBrownCards = brownCards;
+    for (let i=0; i<greenCards.length; i++){
+        
+        if (copyGreenCards[i].difficulty === 'easy'){
+          copyGreenCards.splice(i,1,'');
+        }
+    }
+    for (let i=0; i<blueCards.length; i++){
+        
+        if (copyBlueCards[i].difficulty === 'easy'){
+          copyBlueCards.splice(i,1,'');
+        }
+    }
+    for (let i=0; i<brownCards.length; i++){
+        
+        if (copyBrownCards[i].difficulty === 'easy'){
+          copyBrownCards.splice(i,1,'');
+        }
+    }
+    console.log(copyGreenCards);
+    getShuffeledDeck();
+    getDeckStack();
+  }
+  // if (selectedDifficulty === 'Normal'){
+  //   console.log('+');
+  // }
+  // if (selectedDifficulty === 'Normal'){
+  //   console.log('+');
+  // }
+  // if (selectedDifficulty === 'Normal'){
+  //   console.log('+');
+  // }
+}
 /// функция перемешивания списка
 function shuffeling(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -257,9 +274,14 @@ function getVisualStageSet(){
 // возвращает миниколоду по цвету по условию мифа в виде объекта разбитого на 3 уровня принимая весь набор карт и условие 
 function getSome(arr, def){
   let stack = [];
-  arr.forEach(element => {
-    stack.push(element.id);
-  });
+  // arr.forEach(element => {
+  //   stack.push(element.id);
+  // });
+  for (let i=0;i<arr.length;i++){
+    if (arr[i] !== ''){
+      stack.push(arr[i].id);
+    }
+  }
   let shuffeled = shuffeling(stack);
   let stage1, stage2, stage3 = [];
   stage1 = shuffeled.splice(0,def[0]);
