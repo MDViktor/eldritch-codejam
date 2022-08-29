@@ -174,7 +174,7 @@ function getDiff1(){
     copyGreenCards = [];
     copyBlueCards = [];
     copyBrownCards = [];
-    console.log(qBlueCards);
+
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     let sumGreen = qGreenCards.reduce(reducer);
     let sumBlue = qBlueCards.reduce(reducer);
@@ -228,9 +228,64 @@ function getDiff1(){
     getShuffeledDeck();
     getDeckStack();
   }
-  // if (selectedDifficulty === 'Normal'){
-  //   console.log('+');
-  // }
+  if (selectedDifficulty === 'Very hard'){
+    copyGreenCards = [];
+    copyBlueCards = [];
+    copyBrownCards = [];
+
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    let sumGreen = qGreenCards.reduce(reducer);
+    let sumBlue = qBlueCards.reduce(reducer);
+    let sumBrown = qBrownCards.reduce(reducer);
+    
+    for (let i=0; i<greenCards.length; i++){
+      if (greenCards[i].difficulty === 'hard'){
+        copyGreenCards.push(greenCards[i]);
+      }
+    }
+    if (copyGreenCards.length < sumGreen){
+      for (let i=0; i<greenCards.length; i++){
+        if (greenCards[i].difficulty === 'normal'){
+          while(copyGreenCards.length !== sumGreen){
+            copyGreenCards.push(greenCards[i]);
+          }
+        }
+      }
+    }
+
+    for (let n=0; n<blueCards.length; n++){
+      if (blueCards[n].difficulty === 'hard'){
+        copyBlueCards.push(blueCards[n]);
+      }
+    }
+    if (copyBlueCards.length < sumBlue){
+      for (let n=0; n<blueCards.length; n++){
+        if (blueCards[n].difficulty === 'normal'){
+          while(copyBlueCards.length !== sumBlue){
+            copyBlueCards.push(blueCards[n]);
+          }
+        }
+      }
+    }
+
+    for (let i=0; i<brownCards.length; i++){
+      if (brownCards[i].difficulty === 'hard'){
+        copyBrownCards.push(brownCards[i]);
+      }
+    }
+    if (copyBrownCards.length < sumBrown){
+      for (let i=0; i<brownCards.length; i++){
+        if (brownCards[i].difficulty === 'normal'){
+          while(copyBrownCards.length !== sumBrown){
+            copyBrownCards.push(brownCards[i]);
+          }
+        }
+      }
+    }
+    
+    getShuffeledDeck();
+    getDeckStack();
+  }
 }
 /// функция перемешивания списка
 function shuffeling(array) {
