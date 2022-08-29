@@ -144,9 +144,32 @@ function getDiff1(){
     getShuffeledDeck();
     getDeckStack();
   }
-  // if (selectedDifficulty === 'Normal'){
-  //   console.log('+');
-  // }
+  if (selectedDifficulty === 'Easy'){
+    copyGreenCards = greenCards;
+    copyBlueCards = blueCards;
+    copyBrownCards = brownCards;
+    for (let i=0; i<greenCards.length; i++){
+        
+        if (copyGreenCards[i].difficulty === 'hard'){
+          copyGreenCards.splice(i,1,'');
+        }
+    }
+    for (let i=0; i<blueCards.length; i++){
+        
+        if (copyBlueCards[i].difficulty === 'hard'){
+          copyBlueCards.splice(i,1,'');
+        }
+    }
+    for (let i=0; i<brownCards.length; i++){
+        
+        if (copyBrownCards[i].difficulty === 'hard'){
+          copyBrownCards.splice(i,1,'');
+        }
+    }
+    console.log(copyGreenCards);
+    getShuffeledDeck();
+    getDeckStack();
+  }
   // if (selectedDifficulty === 'Normal'){
   //   console.log('+');
   // }
