@@ -115,6 +115,9 @@ function difficultyChoise () {
 function getDiff1(){
   // console.log(selectedDifficulty + 'test!');
   if (selectedDifficulty === 'Normal'){
+    copyGreenCards = greenCards;
+    copyBlueCards = blueCards;
+    copyBrownCards = brownCards;
     getShuffeledDeck();
     getDeckStack();
   }
