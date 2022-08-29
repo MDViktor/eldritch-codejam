@@ -1,7 +1,7 @@
 import ancientsData from "./ancients.js";
 import { brownCards, blueCards, greenCards } from "./mythicCards/index.js";
 
-var copyGreenCards;
+var copyGreenCards = greenCards;
 const cards = document.querySelectorAll('.ancient_card');
 const difficulty = document.querySelectorAll('.difficulty');
 const secondPhase = document.querySelector('.second_phase');
@@ -59,7 +59,7 @@ function getDeckStack () {
 }
 // перемешивает каждый уровень объекта колоды
 function getShuffeledDeck() {
-  greenDotsNumber = getSome(greenCards, qGreenCards);
+  greenDotsNumber = getSome(copyGreenCards, qGreenCards);
   blueDotsNumber = getSome(blueCards, qBlueCards);
   brownDotsNumber = getSome(brownCards, qBrownCards);
   sDeck = merge_decks(greenDotsNumber, blueDotsNumber, brownDotsNumber);
@@ -105,20 +105,18 @@ function difficultyChoise () {
   });
   
 }
-function Diff(arr){
-  let copy = arr; //// ЗАКОНЧИЛ ЗДЕСЬ!!!
-  if (selectedDifficulty === 'Normal'){
-    return copy;
-  }
+function getDiff(){
+  
+  // if (selectedDifficulty === 'Normal'){
+  //   return copy;
+  // }
   if (selectedDifficulty === 'Hard'){
-    for (let i=0; i<copy.length; i++){
-        if (copy[i].difficulty === 'easy'){
-          copy.splice(i,1);
+    for (let i=0; i<copyGreenCards.length; i++){
+        if (copyGreenCards[i].difficulty === 'easy'){
+          copyGreenCards.splice(i,1);
         }
     }
-    console.log(copy);
-    console.log(arr);
-    console.log(greenCards);
+    return;
   }
   // if (selectedDifficulty === 'Normal'){
   //   console.log('+');
@@ -188,7 +186,7 @@ function getDifficultySelect() {
   });
   if(selectedDifficulty){
     console.log(selectedDifficulty);
-    Diff(greenCards);
+    getDiff();
   }
   setTimeout(getDifficultySelect, 500)
 }
@@ -199,7 +197,6 @@ function getCard() {
   lastCardId = deckStack.pop();
   for (let keys in greenCards) {
     for (let val in greenCards[keys]){
-      // console.log(greenCards[keys][val]);
       if (greenCards[keys][val] === lastCardId) {
         console.log(greenCards[keys].cardFace);
         result = greenCards[keys].cardFace
@@ -208,7 +205,6 @@ function getCard() {
   }
   for (let keys in blueCards) {
     for (let val in blueCards[keys]){
-      // console.log(greenCards[keys][val]);
       if (blueCards[keys][val] === lastCardId) {
         console.log(blueCards[keys].cardFace);
         result = blueCards[keys].cardFace
@@ -217,7 +213,6 @@ function getCard() {
   }
   for (let keys in brownCards) {
     for (let val in brownCards[keys]){
-      // console.log(greenCards[keys][val]);
       if (brownCards[keys][val] === lastCardId) {
         console.log(brownCards[keys].cardFace);
         result = brownCards[keys].cardFace
@@ -266,6 +261,7 @@ function getSome(arr, def){
 }
 
 getDifficultySelect();
+
 shuffle.addEventListener('click', ()=>{
   shuffle.style.display = 'none';
   deckContainer.style.display = 'flex';
