@@ -191,8 +191,9 @@ function getDiff1(){
     if (copyGreenCards.length < sumGreen){
       for (let i=0; i<greenCards.length; i++){
         if (greenCards[i].difficulty === 'normal'){
-          while(copyGreenCards.length !== sumGreen){
-            copyGreenCards.push(greenCards[i]);
+          copyGreenCards.push(greenCards[i]);
+          if(copyGreenCards.length === sumGreen){
+            break;
           }
         }
       }
@@ -206,28 +207,30 @@ function getDiff1(){
     if (copyBlueCards.length < sumBlue){
       for (let n=0; n<blueCards.length; n++){
         if (blueCards[n].difficulty === 'normal'){
-          while(copyBlueCards.length !== sumBlue){
-            copyBlueCards.push(blueCards[n]);
+          copyBlueCards.push(blueCards[n]);
+          if(copyBlueCards.length === sumBlue){
+            break;
           }
         }
       }
     }
 
-    for (let i=0; i<brownCards.length; i++){
-      if (brownCards[i].difficulty === 'easy'){
-        copyBrownCards.push(brownCards[i]);
+    for (let z=0; z<brownCards.length; z++){
+      if (brownCards[z].difficulty === 'easy'){
+        copyBrownCards.push(brownCards[z]);
       }
     }
     if (copyBrownCards.length < sumBrown){
-      for (let i=0; i<brownCards.length; i++){
-        if (brownCards[i].difficulty === 'normal'){
-          while(copyBrownCards.length !== sumBrown){
-            copyBrownCards.push(brownCards[i]);
+      for (let z=0; z<brownCards.length; z++){
+        if (brownCards[z].difficulty === 'normal'){
+          copyBrownCards.push(brownCards[z]);
+          if(copyBrownCards.length === sumBrown){
+            break;
           }
         }
       }
     }
-    
+    console.log(copyBlueCards, copyGreenCards, copyBrownCards);
     getShuffeledDeck();
     getDeckStack();
   }
@@ -249,8 +252,9 @@ function getDiff1(){
     if (copyGreenCards.length < sumGreen){
       for (let i=0; i<greenCards.length; i++){
         if (greenCards[i].difficulty === 'normal'){
-          while(copyGreenCards.length !== sumGreen){
-            copyGreenCards.push(greenCards[i]);
+          copyGreenCards.push(greenCards[i]);
+          if(copyGreenCards.length === sumGreen){
+            break;
           }
         }
       }
@@ -264,8 +268,9 @@ function getDiff1(){
     if (copyBlueCards.length < sumBlue){
       for (let n=0; n<blueCards.length; n++){
         if (blueCards[n].difficulty === 'normal'){
-          while(copyBlueCards.length !== sumBlue){
-            copyBlueCards.push(blueCards[n]);
+          copyBlueCards.push(blueCards[n]);
+          if(copyBlueCards.length === sumBlue){
+            break;
           }
         }
       }
@@ -279,8 +284,9 @@ function getDiff1(){
     if (copyBrownCards.length < sumBrown){
       for (let i=0; i<brownCards.length; i++){
         if (brownCards[i].difficulty === 'normal'){
-          while(copyBrownCards.length !== sumBrown){
-            copyBrownCards.push(brownCards[i]);
+          copyBrownCards.push(brownCards[i]);
+          if(copyBrownCards.length === sumBrown){
+            break;
           }
         }
       }
